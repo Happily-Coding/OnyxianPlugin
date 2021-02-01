@@ -3,22 +3,144 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.onyxiansoul</groupId>
     <artifactId>OnyxianPlugin</artifactId>
-    <version>0.0.1</version>
+    <version>0.9</version>
     <packaging>jar</packaging>
     <properties>
+        <!--Avoid maven warnings caused by dynamic build enviroments-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    
     <repositories>
+      <!--Spigot -->
       <repository>
-          <id>jitpack.io</id>
-          <url>https://jitpack.io</url>
+          <id>spigot-repo</id>
+          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      </repository>
+      <!-- bStats -->
+      <repository>
+          <id>CodeMC</id>
+          <url>https://repo.codemc.org/repository/maven-public</url>
       </repository>
     </repositories>
-    <parent>
-        <groupId>com.github.OnyxianSoul</groupId>
-        <artifactId>OnyxianBase</artifactId>
-        <version>4c88ee6426</version>
-    </parent>
+    
+    <!--Spigot. También aporta commons-lang, guava, gson bungeecordchat, y snakeyaml -->
+    <!-- Recordar, simple ir a la library y download sources + download javadocs baja todo -->
+    <dependencies>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+          <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>16.0.1</version>
+        </dependency>
+        <!--TODO SHADEAR AMBAS ANNOTATIONS--> 
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+          <!-- https://bstats.org/getting-started/include-metrics -->
+        <dependency>
+          <groupId>org.bstats</groupId>
+          <artifactId>bstats-bukkit</artifactId>
+          <version>1.7</version>
+          <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <!-- Allow the usage of maven placeholders, such as ${project.version} in all the resources (plugin.yml, config.yml, etc)  -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory> 
+                <filtering>true</filtering>
+             </resource>
+        </resources>
+        
+      <!--Create ${artifactId.lowercase} placeholder-->  
+      <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+             <execution>
+              <id>create-artifactId.lowercase</id>
+              <phase>initialize</phase>
+              <goals>
+               <goal>regex-property</goal>
+              </goals>
+              <configuration>
+               <name>artifactId.lowercase</name>
+               <value>${project.artifactId}</value>
+               <regex>${project.artifactId}</regex>
+               <replacement>${project.artifactId}</replacement>
+               <toLowerCase>true</toLowerCase>
+               <failIfNoMatch>false</failIfNoMatch>
+               <fileSet/>
+               <source/>
+              </configuration>
+             </execution>
+            </executions>
+        </plugin>
+        
+        <!--Shade things inside the jar, required for it to work, for example bStats.-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.1.0</version>
+          <configuration>
+            <!-- Prevent META-INF folder from being included. -->
+            <filters>
+                <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+                    <exclude>META-INF/**</exclude>
+                </excludes>
+                </filter>
+            </filters>
+            <!-- Relocate the resources to prevent clashing with other plugins.-->
+            <relocations>
+              <relocation>
+                <pattern>org.bstats</pattern>
+                <shadedPattern>${project.groupId}.${artifactId.lowercase}.shaded.org.bstats</shadedPattern>
+              </relocation>
+            </relocations>
+          </configuration>
+          <executions>
+            <execution>
+              <!--Make the shading happen during maven package-->
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                    <!--Prevent an unnecesairy step during the compilation-->
+                  <createDependencyReducedPom>false</createDependencyReducedPom>
+                  <!---Make the name be just the plugin name-->
+                  <finalName>${project.artifactId}</finalName>
+                  <!---Make the output directory be our test directory. ../ just means parent folder. In my case this is the relative path that points to my test server-->
+                  <!---<outputDirectory>../../Minecraft/Development Server/plugins</outputDirectory>-->
+                  <outputFile>../../../Minecraft/Development Server/plugins/${project.artifactId}.jar</outputFile>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+
 </project>

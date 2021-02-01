@@ -4,41 +4,51 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.plugin.PluginManager;
 
-public class MessageUtil {
-    private final ConsoleCommandSender CONSOLE_SENDER;
-    private final String WARNING_PREFIX;
-    private final String ERROR_PREFIX;
-    private final String ERROR_SUFIX;
-    private boolean debugEnabled;
+public final class MessageUtil {
+    private static ConsoleCommandSender CONSOLE_SENDER;
+    private static String INFO_PREFIX;
+    private static String WARNING_PREFIX;
+    private static String ERROR_PREFIX;
+    private static String ERROR_SUFIX;
+    private static boolean debugEnabled;
     
     protected MessageUtil(OnyxianPlugin onyxianPlugin){
       CONSOLE_SENDER = Bukkit.getConsoleSender();
       String pluginName = onyxianPlugin.getName();
+      INFO_PREFIX = System.lineSeparator() + ChatColor.GRAY +"[INFO]" +pluginName+ " ";
       WARNING_PREFIX = System.lineSeparator()+ ChatColor.GOLD+"[WARNING]"+pluginName+" ";
       ERROR_PREFIX = System.lineSeparator()+ ChatColor.RED+"[ERROR]"+pluginName+" ";
       ERROR_SUFIX = System.lineSeparator() + ChatColor.RED+ "Disabling"+" "+pluginName + "!";
       debugEnabled = false;
     }
     
+    public void sendInfo(String infoMessage){
+      CONSOLE_SENDER.sendMessage(INFO_PREFIX + infoMessage);
+    }
+    
     public void sendWarning(String warningMessage){
-        CONSOLE_SENDER.sendMessage(WARNING_PREFIX + warningMessage);
+      CONSOLE_SENDER.sendMessage(WARNING_PREFIX + warningMessage);
     }
     public void sendWarning(Exception e){
-        String warningMessage = getFormattedException(e);
-        sendWarning(warningMessage);
+      sendWarning(getFormattedException(e));
     }
     
-    public void errorDisable(String errorMessage){
+    public void sendWarning(String extraMessage, Exception e){
+      sendWarning(extraMessage+ " this was caused by: "+ System.lineSeparator()+ getFormattedException(e));
+    }
+    
+    public void sendError(String errorMessage){
         CONSOLE_SENDER.sendMessage(ERROR_PREFIX + errorMessage + ERROR_SUFIX);
-        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        pluginManager.disablePlugin(pluginManager.getPlugin("DamagePotionEffects"));
     }
     
-    public void errorDisable(Exception e){
-        String errorMessage = getFormattedException(e);
-        errorDisable(errorMessage);
+    public void sendError(Exception e){
+      String errorMessage = getFormattedException(e);
+      sendError(errorMessage);
+    }
+    
+    public void sendError(String errorMessage, Exception e){
+      sendError(errorMessage+ " this was caused by: "+ System.lineSeparator()+ getFormattedException(e));
     }
     
     private String getFormattedException(Throwable ex){
