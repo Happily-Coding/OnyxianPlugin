@@ -129,7 +129,7 @@
                   <finalName>${project.artifactId}</finalName>
                   <!---Make the output directory be our test directory. ../ just means parent folder. In my case this is the relative path that points to my test server-->
                   <!---<outputDirectory>../../Minecraft/Development Server/plugins</outputDirectory>-->
-                  <outputFile>../../../Minecraft/Development Server/plugins/${project.artifactId}.jar</outputFile>
+                  <!---<outputFile>../../../Minecraft/Development Server/plugins/${project.artifactId}.jar</outputFile>-->
               </configuration>
             </execution>
           </executions>
