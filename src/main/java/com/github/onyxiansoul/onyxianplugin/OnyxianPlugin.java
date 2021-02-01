@@ -30,14 +30,17 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   private void downloadCoreIfMissing(){
     if(!isCorePresent()){
       String requiredCoreURL="https://jitpack.io/com/github/OnyxianSoul/OnyxianCore/"+coreVersion+"/OnyxianCore-"+coreVersion+".jar";
-      String pluginsFolder = getDataFolder().getParent()+"/OnyxianCore.jar";
+      String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
       try{
-        downloadFile(requiredCoreURL,pluginsFolder);
+        System.out.println("Trying to download" + coreFileName);
+        downloadFile(requiredCoreURL,coreFileName);
+        System.out.println("Success!");
       }
       catch (IOException e){
           messageUtil.errorDisable("Tried to automatically download the OnyxianCore, but failed"+ System.lineSeparator()
           +"Since the core is essential for"+ getName() + " Plugin to work, it will disable itself."+ System.lineSeparator()
           +"Please download the core manually from: " + requiredCoreURL);
+          e.printStackTrace();
       }
     }
   }
@@ -49,7 +52,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   private void downloadFile(String url, String fileName) throws MalformedURLException, IOException{
       URL website = new URL("https://jitpack.io/com/github/OnyxianSoul/OnyxianCore/5d796199cb/OnyxianCoreAPI-5d796199cb.jar");
       ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-      FileOutputStream fos = new FileOutputStream("information.html");
+      FileOutputStream fos = new FileOutputStream(fileName);
       fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
   }
 
