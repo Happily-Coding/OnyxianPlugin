@@ -1,4 +1,4 @@
-package com.github.onyxiansoul;
+package com.github.onyxiansoul.onyxianplugin;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

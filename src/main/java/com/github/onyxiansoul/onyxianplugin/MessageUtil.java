@@ -1,4 +1,4 @@
-package com.github.onyxiansoul;
+package com.github.onyxiansoul.onyxianplugin;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
