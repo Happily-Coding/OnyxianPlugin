@@ -73,7 +73,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
      }
    }
   
-  abstract String getRecommendedCoreVersion();
+  protected abstract String getRecommendedCoreVersion();
     
   protected void downloadFile(String sourceURL, String outputFileName) throws MalformedURLException, IOException{
       URL website = new URL(sourceURL);
