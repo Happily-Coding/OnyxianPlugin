@@ -53,7 +53,28 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   }
   
   private void ensureCoreAvailability(){
-     if(!Bukkit.getPluginManager().isPluginEnabled("OnyxianCore")){
+    if(getRecommendedCoreVersion() != null){
+      if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreRegistry.class)){
+        String requiredCoreURL="https://jitpack.io/com/github/OnyxianSoul/OnyxianCore/"+getRecommendedCoreVersion()+"/OnyxianCore-"+getRecommendedCoreVersion()+".jar";
+        String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
+        try{
+          sendInfo("OnyxianCore is required for "+ getName() + " to function, but it wasn't found. Attempting to download it!");
+          downloadFile(requiredCoreURL,coreFileName);
+          Bukkit.getPluginManager().loadPlugin(new File(coreFileName));
+          Bukkit.getPluginManager().enablePlugin(this);
+          sendInfo("Success!");
+        }
+        catch (IOException e){
+            errorDisable("Tried to automatically download the OnyxianCore, but failed"+ System.lineSeparator()
+            +"Since the core is essential for "+ getName() + " Plugin to work, it will disable itself."+ System.lineSeparator()
+            +"Please download the core manually from: " + requiredCoreURL, e);
+        } catch (InvalidPluginException | InvalidDescriptionException | UnknownDependencyException e) {
+          errorDisable("Tried to load the OnyxianCore but it was impossible. This is unexpected, Please contact us ASAP. ", e);
+        }
+      }
+    }
+    //FIJARSE SI ESTA EL LISTENER ANOTADO
+     /*if(!Bukkit.getPluginManager().isPluginEnabled("OnyxianCore")){
        String requiredCoreURL="https://jitpack.io/com/github/OnyxianSoul/OnyxianCore/"+getRecommendedCoreVersion()+"/OnyxianCore-"+getRecommendedCoreVersion()+".jar";
        String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
        try{
@@ -70,7 +91,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
        } catch (InvalidPluginException | InvalidDescriptionException | UnknownDependencyException e) {
          errorDisable("Tried to load the OnyxianCore but it was impossible. This is unexpected, Please contact us ASAP. ", e);
        }
-     }
+     }*/
    }
   
   protected abstract String getRecommendedCoreVersion();
