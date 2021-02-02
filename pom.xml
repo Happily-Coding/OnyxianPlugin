@@ -4,7 +4,7 @@
     <groupId>com.github.onyxiansoul</groupId>
     <artifactId>OnyxianPlugin</artifactId>
     <version>0.9</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <properties>
         <!--Avoid maven warnings caused by dynamic build enviroments-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
