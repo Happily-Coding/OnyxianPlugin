@@ -1,5 +1,11 @@
 package com.github.onyxiansoul.onyxianplugin;
 
+import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreAPI;
+import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreAPI;
+import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreRegistry;
+import com.github.onyxiansoul.onyxianplugin.Messenger;
+import com.github.onyxiansoul.onyxianplugin.Messenger;
+import com.github.onyxiansoul.onyxianplugin.Messenger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,13 +16,15 @@ import java.nio.channels.ReadableByteChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 //NOTE! all onyxianplugins must depend on the onyxiancore!
 public abstract class OnyxianPlugin extends JavaPlugin {
-  private static MessageUtil messenger;
+  private static Messenger messenger;
   private static String pluginName;
+  private static Plugin plugin;
   
     public static void sendInfo(String infoMessage){
       messenger.sendInfo(infoMessage);
@@ -43,18 +51,30 @@ public abstract class OnyxianPlugin extends JavaPlugin {
       messenger.sendError(errorMessage, e);
       Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin(pluginName));
     }
-
+    
+    public static void setDebug(boolean debugStatus){
+      messenger.setDebug(debugStatus);
+    }
+    
+    public static boolean isDebugEnabled(){
+      return messenger.isDebugEnabled();
+    }
+    
+    public static Plugin getInstance(){
+      return plugin;
+    }
   
   @Override
   public void onLoad(){
-    messenger = new MessageUtil(this);
+    plugin = this;
+    messenger = new Messenger(this);
     pluginName = getName();
     ensureCoreAvailability();
   }
   
   private void ensureCoreAvailability(){
     if(getRecommendedCoreVersion() != null){
-      if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreRegistry.class)){
+      if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreAPI.class)){
         String requiredCoreURL="https://jitpack.io/com/github/OnyxianSoul/OnyxianCore/"+getRecommendedCoreVersion()+"/OnyxianCore-"+getRecommendedCoreVersion()+".jar";
         String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
         try{
