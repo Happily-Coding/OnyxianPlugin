@@ -36,7 +36,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
       messenger.sendWarning(e);
     }
     public static void sendWarning(String extraMessage, Exception e){
-      messenger.sendWarning(extraMessage+ e);
+      messenger.sendWarning(extraMessage, e);
     }
     public static void errorDisable(String errorMessage){
       messenger.sendError(errorMessage);
