@@ -20,7 +20,7 @@ public final class Messenger {
     WARNING_PREFIX = System.lineSeparator()+ ChatColor.GOLD+"[WARNING]"+pluginName+" ";
     ERROR_PREFIX = System.lineSeparator()+ ChatColor.RED+"[ERROR]"+pluginName+" ";
     ERROR_SUFIX = System.lineSeparator() + ChatColor.RED+ "Disabling"+" "+pluginName + "!";
-    debugEnabled = false;
+    debugEnabled = true;
   }
 
   public void sendInfo(String infoMessage){
@@ -93,7 +93,7 @@ public final class Messenger {
     
   public void setDebug(boolean debug){
       debugEnabled = debug;
-  };
+  }
 
   public boolean isDebugEnabled() {
     return debugEnabled;

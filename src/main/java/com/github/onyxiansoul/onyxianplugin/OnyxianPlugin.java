@@ -37,7 +37,6 @@ public abstract class OnyxianPlugin extends JavaPlugin {
     }
     public static void sendWarning(String extraMessage, Exception e){
       messenger.sendWarning(extraMessage+ e);
-      Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin(pluginName));
     }
     public static void errorDisable(String errorMessage){
       messenger.sendError(errorMessage);
