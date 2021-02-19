@@ -67,8 +67,11 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   }
   
   private void ensureCoreAvailability(){
+    System.out.println("Ensure core availability run!");
     if(getRecommendedCoreVersion() != null){
+      System.out.println("not null");
       if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreAPI.class)){
+        System.out.println("not provided for");
         String requiredCoreURL="https://github.com/OnyxianSoul/OnyxianCoreJars/releases/download/v"+getRecommendedCoreVersion()+"/OnyxianCore.jar";
         String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
         try{
