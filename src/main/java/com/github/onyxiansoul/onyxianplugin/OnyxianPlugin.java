@@ -1,6 +1,6 @@
 package com.github.onyxiansoul.onyxianplugin;
 
-import com.github.onyxiansoul.onyxiancoreapi.v2.OnyxianCoreAPI;
+import com.github.onyxiansoul.onyxiancoreapi.v2.OnyxianCoreAccess;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -67,10 +67,8 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   }
   
   private void ensureCoreAvailability(){
-    System.out.println("Ensure core availability run!");
-    //if(getRecommendedCoreVersion() != null){
-      if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreAPI.class)){
-        System.out.println("not provided for");
+    if(getRecommendedCoreVersion() != null){
+      if(!Bukkit.getServicesManager().isProvidedFor(OnyxianCoreAccess.class)){
         String requiredCoreURL="https://github.com/OnyxianSoul/OnyxianCoreJars/releases/download/v"+getRecommendedCoreVersion()+"/OnyxianCore.jar";
         String coreFileName = getDataFolder().getParent()+"/OnyxianCore.jar";
         try{
@@ -89,7 +87,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
           errorDisable("Tried to load the OnyxianCore but it was impossible. This is unexpected, Please contact us ASAP. ", e);
         }
       }
-    //}
+    }
    }
     
   protected void downloadFile(String sourceURL, String outputFileName) throws MalformedURLException, IOException{
