@@ -11,7 +11,7 @@
     <artifactId>OnyxianBase</artifactId>
     <version>06544b7673</version>
   </parent>
-  <!--The repository for onyxian base.-->
+  <!--The repository for onyxian base & Core API-->
   <repositories>
     <repository>
         <id>jitpack.io</id>
