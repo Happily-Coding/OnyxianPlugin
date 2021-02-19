@@ -9,7 +9,7 @@
   <parent>
     <groupId>com.github.OnyxianSoul</groupId>
     <artifactId>OnyxianBase</artifactId>
-    <version>06544b7673</version>
+    <version>a4c5a3dcff</version>
   </parent>
   <!--The repository for onyxian base & Core API-->
   <repositories>
