@@ -77,8 +77,9 @@ public abstract class OnyxianPlugin extends JavaPlugin {
         try{
           sendInfo("OnyxianCore is required for "+ getName() + " to function, but it wasn't found. Attempting to download it!");
           downloadFile(requiredCoreURL,coreFileName);
-          Bukkit.getPluginManager().loadPlugin(new File(coreFileName));
-          Bukkit.getPluginManager().enablePlugin(this);
+          File coreFile= new File(coreFileName);
+          Bukkit.getPluginManager().loadPlugin(coreFile);
+          Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().getPlugin("OnyxianCore"));
           sendInfo("Success!");
         }
         catch (IOException e){
