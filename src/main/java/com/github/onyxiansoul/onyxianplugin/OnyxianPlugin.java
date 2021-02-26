@@ -1,6 +1,6 @@
 package com.github.onyxiansoul.onyxianplugin;
 
-import com.github.onyxiansoul.onyxiancoreapi.v2.OnyxianCoreAccess;
+import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreAccess;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -76,7 +76,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
           downloadFile(requiredCoreURL,coreFileName);
           File coreFile= new File(coreFileName);
           Bukkit.getPluginManager().loadPlugin(coreFile);
-          Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().getPlugin("OnyxianCore"));
+          Bukkit.getPluginManager().enablePlugin(Bukkit.getPluginManager().getPlugin("OnyxianCorePlugin"));
           sendInfo("Success!");
         }
         catch (IOException e){

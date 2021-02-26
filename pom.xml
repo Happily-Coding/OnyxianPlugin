@@ -22,8 +22,8 @@
     <dependency>
       <groupId>com.github.OnyxianSoul</groupId>
       <artifactId>OnyxianCoreAPI</artifactId>
-      <version>66e305d708</version>
-      <scope>compile</scope>
+      <version>c505b487b8</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
