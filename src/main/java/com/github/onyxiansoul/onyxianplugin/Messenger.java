@@ -15,8 +15,8 @@ public final class Messenger {
 
   protected Messenger(OnyxianPlugin onyxianPlugin){
     CONSOLE_SENDER = Bukkit.getConsoleSender();
-    String pluginName = onyxianPlugin.getName();
-    INFO_PREFIX = System.lineSeparator() + ChatColor.GRAY +"[INFO]" +pluginName+ " ";
+    String pluginName = "["+onyxianPlugin.getName()+"]";
+    INFO_PREFIX = ChatColor.GREEN +pluginName+ " ";
     WARNING_PREFIX = System.lineSeparator()+ ChatColor.GOLD+"[WARNING]"+pluginName+" ";
     ERROR_PREFIX = System.lineSeparator()+ ChatColor.RED+"[ERROR]"+pluginName+" ";
     ERROR_SUFIX = System.lineSeparator() + ChatColor.RED+ "Disabling"+" "+pluginName + "!";
