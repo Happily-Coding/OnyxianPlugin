@@ -11,7 +11,6 @@ import java.nio.channels.ReadableByteChannel;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class OnyxianPlugin extends JavaPlugin {
   private static Messenger messenger;
   private static String pluginName;
-  private static Plugin plugin;
+  private static JavaPlugin plugin;
   
   public static void sendInfo(String infoMessage){
     messenger.sendInfo(infoMessage);
@@ -54,7 +53,8 @@ public abstract class OnyxianPlugin extends JavaPlugin {
     return messenger.isDebugEnabled();
   }
 
-  public static Plugin getInstance(){
+  /**Esto esta bien, hasta choco lo hace.*/
+  public static JavaPlugin getInstance(){
     return plugin;
   }
   
