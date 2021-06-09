@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.onyxiansoul</groupId>
   <artifactId>OnyxianPlugin</artifactId>
-  <version>0.9.1</version>
+  <version>0.9.2</version>
   <packaging>jar</packaging>
   <!--The base pom for plugin projects-->
   <parent>
@@ -22,7 +22,7 @@
     <dependency>
       <groupId>com.github.OnyxianSoul</groupId>
       <artifactId>OnyxianCoreAPI</artifactId>
-      <version>c505b487b8</version>
+      <version>ff31fb8379</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
