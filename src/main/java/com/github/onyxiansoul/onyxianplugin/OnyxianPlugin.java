@@ -1,5 +1,6 @@
 package com.github.onyxiansoul.onyxianplugin;
 
+import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreAPI;
 import com.github.onyxiansoul.onyxiancoreapi.OnyxianCoreAccess;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +20,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
   private static Messenger messenger;
   private static String pluginName;
   private static JavaPlugin plugin;
+  private static OnyxianCoreAPI onyxianCoreAPI;
   
   public static void sendInfo(String infoMessage){
     messenger.sendInfo(infoMessage);
@@ -58,12 +60,17 @@ public abstract class OnyxianPlugin extends JavaPlugin {
     return plugin;
   }
   
+  public static OnyxianCoreAPI getOnyxianCoreAPI(){
+    return onyxianCoreAPI;
+  }
+  
   @Override
   public void onLoad(){
     plugin = this;
     messenger = new Messenger(this);
     pluginName = getName();
     ensureCoreAvailability();
+    onyxianCoreAPI = getServer().getServicesManager().getRegistration(OnyxianCoreAccess.class).getProvider().getOnyxianCoreAPI(this);
   }
   
   private void ensureCoreAvailability(){
@@ -88,7 +95,7 @@ public abstract class OnyxianPlugin extends JavaPlugin {
         }
       }
     }
-   }
+  }
     
   protected void downloadFile(String sourceURL, String outputFileName) throws MalformedURLException, IOException{
       URL website = new URL(sourceURL);
